@@ -1,19 +1,30 @@
 <?php
 
-require_once 'RepositoryInterface.php';
-require_once 'User.php';
+require_once __DIR__ . '/../RepositoryInterface.php';
+require_once __DIR__ . '/../User.php';
+// require_once __DIR__ . '/../Database/ArrayClient.php';
 
 class UserRepository implements RepositoryInterface
 {
-    public function getUser(string $userEmail) : User
+    public function getUser(string $userEmail): User
     {
-        // A faire
-        return new User('A implementer', 'en utilisant un client de base de données');
+        $database = new JSONClient();
+        $clients = $database->fetchAll();
+
+        foreach ($clients as $client) {
+            $full_name = $client['full_name'];
+            $email = $client['email'];
+            if ($userEmail === $email) {
+                return new User($email, $full_name);
+            }
+        }
     }
 
-    public function getUsers() : array
+    public function getUsers(): array
     {
-        // A faire
-        return [];
+        $database = new JSONClient();
+        $clients = $database->fetchAll();
+
+        return $clients;
     }
 }
