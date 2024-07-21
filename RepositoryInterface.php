@@ -2,6 +2,8 @@
 
 interface RepositoryInterface
 {
+    
+
     /**
      * Retrieve the user
      *
